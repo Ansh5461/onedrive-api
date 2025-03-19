@@ -273,6 +273,7 @@ impl Auth {
             self.permission.offline_access,
             "Refresh token requires offline_access permission."
         );
+        let scope = self.code_auth_url().to_string();
 
         self.request_token(
             true,
@@ -281,6 +282,7 @@ impl Auth {
                 ("grant_type", "refresh_token"),
                 ("redirect_uri", &self.redirect_uri),
                 ("refresh_token", refresh_token),
+                ("scope", &scope),
             ]
             .into_iter()
             .chain(client_credential.params()),
