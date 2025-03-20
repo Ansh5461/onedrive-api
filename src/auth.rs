@@ -199,6 +199,7 @@ impl Auth {
     #[must_use]
     pub fn code_auth_url(&self) -> Url {
         let mut url = self.endpoint_url("authorize");
+        println!("{}", url.to_string());
         url.query_pairs_mut()
             .append_pair("client_id", &self.client_id)
             .append_pair("scope", &self.permission.to_scope_string())
