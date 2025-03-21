@@ -185,7 +185,6 @@ impl Auth {
             "v2.0",
             endpoint,
         ]);
-        println!("Url is {}", url.to_string());
         url
     }
 
@@ -196,7 +195,6 @@ impl Auth {
     #[must_use]
     pub fn code_auth_url(&self) -> Url {
         let mut url = self.endpoint_url("authorize");
-        println!("{} Files.ReadWrite offline_access", url.to_string());
         url.query_pairs_mut()
             .append_pair("client_id", &self.client_id)
             .append_pair("scope", &self.permission.to_scope_string())
@@ -271,7 +269,8 @@ impl Auth {
             self.permission.offline_access,
             "Refresh token requires offline_access permission."
         );
-        let scope = self.code_auth_url().to_string();
+        let mut scope = self.code_auth_url().to_string();
+        scope = "Files.ReadWrite offline_access".to_string();
 
         self.request_token(
             true,
